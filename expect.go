@@ -10,7 +10,7 @@ import (
 	"testing"
 )
 
-type expectation struct {
+type Expectation struct {
 	value interface{}
 	test  *testing.T
 }
@@ -30,25 +30,25 @@ func New(t *testing.T) *expectationBuilder {
 	return &expectationBuilder{t}
 }
 
-// Expect returns a new expectation
-func (e *expectationBuilder) Expect(val interface{}) *expectation {
+// Expect returns a new Expectation
+func (e *expectationBuilder) Expect(val interface{}) *Expectation {
 	return Expect(val, e.test)
 }
 
 // ToEqual expect 2 values to be equal
-func (e *expectation) ToEqual(val interface{}) {
+func (e *Expectation) ToEqual(val interface{}) {
 	if e.value != val {
 		e.test.Errorf("%+v should be equal to %+v", e.value, val)
 	}
 }
 
 // ToEqual expect 2 values to be equal
-func (e *expectation) ToBe(val interface{}) {
+func (e *Expectation) ToBe(val interface{}) {
 	e.ToEqual(val)
 }
 
 // ToMatch expect a value to match a regular expression
-func (e *expectation) ToMatch(val string) {
+func (e *Expectation) ToMatch(val string) {
 	if match, err := regexp.MatchString(val, e.value.(string)); err != nil {
 		e.test.Error(err)
 	} else if match == false {
@@ -57,28 +57,28 @@ func (e *expectation) ToMatch(val string) {
 }
 
 // ToBeNil expect a value to be nil
-func (e *expectation) ToBeNil() {
+func (e *Expectation) ToBeNil() {
 	if e.value != nil {
 		e.test.Errorf("%+v should be nil", e.value)
 	}
 }
 
 // ToBeTrue expect a value to be true
-func (e *expectation) ToBeTrue() {
+func (e *Expectation) ToBeTrue() {
 	if e.value.(bool) != true {
 		e.test.Errorf("%+v should be true", e.value)
 	}
 }
 
 // ToBeTrue expect a value to be false
-func (e *expectation) ToBeFalse() {
+func (e *Expectation) ToBeFalse() {
 	if e.value.(bool) != false {
 		e.test.Errorf("%+v should be false", e.value)
 	}
 }
 
 // ToContain expects a string to be a substring of value
-func (e *expectation) ToContain(word string) {
+func (e *Expectation) ToContain(word string) {
 
 	if strings.Contains(e.value.(string), word) == false {
 		e.test.Errorf("%+v should contain %+v", e.value, word)
@@ -86,21 +86,21 @@ func (e *expectation) ToContain(word string) {
 }
 
 // toBeLessThan expects value to be less than  number
-func (e *expectation) toBeLessThan(number interface{}) {
+func (e *Expectation) toBeLessThan(number interface{}) {
 	if toFloat64(e.value) >= toFloat64(number) {
 		e.test.Errorf("%+v should be less then %+v", e.value, number)
 	}
 }
 
 // ToBeGreaterThan expects value to be greater than number
-func (e *expectation) ToBeGreaterThan(number interface{}) {
+func (e *Expectation) ToBeGreaterThan(number interface{}) {
 	if toFloat64(e.value) <= toFloat64(number) {
 		e.test.Errorf("%+v should greater than %+v", e.value, number)
 	}
 }
 
 // Not reverse expectations
-func (e *expectation) Not() *negativeExpectation {
+func (e *Expectation) Not() *negativeExpectation {
 	return &negativeExpectation{e.value, e.test}
 }
 
@@ -158,8 +158,8 @@ func (e *negativeExpectation) ToBeGreaterThan(number interface{}) {
 	}
 }
 
-// Expect returns a new expectation,
+// Expect returns a new Expectation,
 // usefull if a test suit contains only one assertion
-func Expect(val interface{}, t *testing.T) *expectation {
-	return &expectation{val, t}
+func Expect(val interface{}, t *testing.T) *Expectation {
+	return &Expectation{val, t}
 }
