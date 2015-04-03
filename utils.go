@@ -1,3 +1,7 @@
+// Copyright 2015 mparaiso<mparaiso@online.fr>. All rights reserved.
+// Use of this source code is governed by a MIT-style
+// license that can be found in the LICENSE file.
+
 package expect
 
 import (
@@ -5,6 +9,7 @@ import (
 	"strconv"
 )
 
+// tries to convert val to a float64, panics if it fails
 func toFloat64(val interface{}) float64 {
 
 	switch t := val.(type) {
