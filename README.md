@@ -1,5 +1,7 @@
 #expect
 
+author mparaiso<mparaiso@online.fr>
+
 Expect provide expectations for Go test suits.
 
 ##Usage
