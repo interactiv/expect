@@ -1,5 +1,7 @@
 #expect
 
+[![Build Status](https://travis-ci.org/interactiv/expect.svg?branch=master)](https://travis-ci.org/interactiv/expect)
+
 author mparaiso<mparaiso@online.fr>
 
 Expect provide expectations for Go test suits.
