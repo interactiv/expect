@@ -13,7 +13,7 @@ Expect provide expectations for Go test suits.
 	)
 	
 	func TestNew(t *testing.T) {
-		e := New(t)
+		e := expect.New(t)
 		e.Expect(1).ToEqual(1)
 		e.Expect(2).Not().ToEqual(1)
 		e.Expect(1).ToBe(1)

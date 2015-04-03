@@ -3,7 +3,7 @@
 // license that can be found in the LICENSE file.
 
 /*
-expect provides expectations for go test suits
+expect provides expectations for Go test suits.
 
 Usage
 
@@ -13,7 +13,7 @@ Usage
 	)
 
 	func TestNew(t *testing.T) {
-		e := New(t)
+		e := expect.New(t)
 		e.Expect(1).ToEqual(1)
 		e.Expect(2).Not().ToEqual(1)
 		e.Expect(1).ToBe(1)
