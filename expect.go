@@ -77,6 +77,7 @@ func (e *expectation) ToBeFalse() {
 	}
 }
 
+// ToContain expects a string to be a substring of value
 func (e *expectation) ToContain(word string) {
 
 	if strings.Contains(e.value.(string), word) == false {
@@ -84,12 +85,14 @@ func (e *expectation) ToContain(word string) {
 	}
 }
 
+// toBeLessThan expects value to be less than  number
 func (e *expectation) toBeLessThan(number interface{}) {
 	if toFloat64(e.value) >= toFloat64(number) {
 		e.test.Errorf("%+v should be less then %+v", e.value, number)
 	}
 }
 
+// ToBeGreaterThan expects value to be greater than number
 func (e *expectation) ToBeGreaterThan(number interface{}) {
 	if toFloat64(e.value) <= toFloat64(number) {
 		e.test.Errorf("%+v should greater than %+v", e.value, number)
