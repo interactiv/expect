@@ -10,11 +10,13 @@ import (
 	"testing"
 )
 
+// Expectation is an expectation to be tested
 type Expectation struct {
 	value interface{}
 	test  *testing.T
 }
 
+// NegativeExpectation is a negative expectation to be tested
 type NegativeExpectation struct {
 	value interface{}
 	test  *testing.T
@@ -35,19 +37,19 @@ func (e *expectationBuilder) Expect(val interface{}) *Expectation {
 	return Expect(val, e.test)
 }
 
-// ToEqual expect 2 values to be equal
+// ToEqual expects 2 values to be equal
 func (e *Expectation) ToEqual(val interface{}) {
 	if e.value != val {
 		e.test.Errorf("%+v should be equal to %+v", e.value, val)
 	}
 }
 
-// ToEqual expect 2 values to be equal
+// ToBe expects 2 values to be equal
 func (e *Expectation) ToBe(val interface{}) {
 	e.ToEqual(val)
 }
 
-// ToMatch expect a value to match a regular expression
+// ToMatch expects a value to match a regular expression
 func (e *Expectation) ToMatch(val string) {
 	if match, err := regexp.MatchString(val, e.value.(string)); err != nil {
 		e.test.Error(err)
@@ -56,21 +58,21 @@ func (e *Expectation) ToMatch(val string) {
 	}
 }
 
-// ToBeNil expect a value to be nil
+// ToBeNil expects a value to be nil
 func (e *Expectation) ToBeNil() {
 	if e.value != nil {
 		e.test.Errorf("%+v should be nil", e.value)
 	}
 }
 
-// ToBeTrue expect a value to be true
+// ToBeTrue expects a value to be true
 func (e *Expectation) ToBeTrue() {
 	if e.value.(bool) != true {
 		e.test.Errorf("%+v should be true", e.value)
 	}
 }
 
-// ToBeTrue expect a value to be false
+// ToBeFalse expects a value to be false
 func (e *Expectation) ToBeFalse() {
 	if e.value.(bool) != false {
 		e.test.Errorf("%+v should be false", e.value)
