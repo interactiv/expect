@@ -15,7 +15,7 @@ type Expectation struct {
 	test  *testing.T
 }
 
-type negativeExpectation struct {
+type NegativeExpectation struct {
 	value interface{}
 	test  *testing.T
 }
@@ -100,20 +100,20 @@ func (e *Expectation) ToBeGreaterThan(number interface{}) {
 }
 
 // Not reverse expectations
-func (e *Expectation) Not() *negativeExpectation {
-	return &negativeExpectation{e.value, e.test}
+func (e *Expectation) Not() *NegativeExpectation {
+	return &NegativeExpectation{e.value, e.test}
 }
 
-func (e *negativeExpectation) ToEqual(val interface{}) {
+func (e *NegativeExpectation) ToEqual(val interface{}) {
 	if e.value == val {
 		e.test.Errorf("%+v should not be equal to %+v", e.value, val)
 	}
 }
-func (e *negativeExpectation) ToBe(val interface{}) {
+func (e *NegativeExpectation) ToBe(val interface{}) {
 	e.ToEqual(val)
 }
 
-func (e *negativeExpectation) ToMatch(val string) {
+func (e *NegativeExpectation) ToMatch(val string) {
 	if match, err := regexp.MatchString(val, e.value.(string)); err != nil {
 		e.test.Error(err)
 	} else if match == true {
@@ -121,38 +121,38 @@ func (e *negativeExpectation) ToMatch(val string) {
 	}
 }
 
-func (e *negativeExpectation) ToBeNil() {
+func (e *NegativeExpectation) ToBeNil() {
 	if e.value == nil {
 		e.test.Errorf("%+v should not be nil", e.value)
 	}
 }
 
-func (e *negativeExpectation) ToBeTrue() {
+func (e *NegativeExpectation) ToBeTrue() {
 	if e.value.(bool) == true {
 		e.test.Errorf("%+v should not be true", e.value)
 	}
 }
 
-func (e *negativeExpectation) ToBeFalse() {
+func (e *NegativeExpectation) ToBeFalse() {
 	if e.value.(bool) == false {
 		e.test.Errorf("%+v should not be false", e.value)
 	}
 }
 
-func (e *negativeExpectation) ToContain(word string) {
+func (e *NegativeExpectation) ToContain(word string) {
 
 	if strings.Contains(e.value.(string), word) == true {
 		e.test.Errorf("%+v should not contain %+v", e.value, word)
 	}
 }
 
-func (e *negativeExpectation) toBeLessThan(number float64) {
+func (e *NegativeExpectation) toBeLessThan(number float64) {
 	if toFloat64(e.value) < toFloat64(number) {
 		e.test.Errorf("%+v should not be less than %+v", e.value, number)
 	}
 }
 
-func (e *negativeExpectation) ToBeGreaterThan(number interface{}) {
+func (e *NegativeExpectation) ToBeGreaterThan(number interface{}) {
 	if toFloat64(e.value) > toFloat64(number) {
 		e.test.Errorf("%+v should not be greater than %+v", e.value, number)
 	}
