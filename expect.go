@@ -44,6 +44,15 @@ func (e *Expectation) ToEqual(val interface{}) {
 	}
 }
 
+func (e *Expectation) ToPanic() {
+	defer func() {
+		if err := recover(); err == nil {
+			e.test.Errorf("%v should not panic", e.value)
+		}
+	}()
+	e.value.(func())()
+}
+
 // ToBe expects 2 values to be equal
 func (e *Expectation) ToBe(val interface{}) {
 	e.ToEqual(val)
@@ -158,6 +167,15 @@ func (e *NegativeExpectation) ToBeGreaterThan(number interface{}) {
 	if toFloat64(e.value) > toFloat64(number) {
 		e.test.Errorf("%+v should not be greater than %+v", e.value, number)
 	}
+}
+
+func (e *NegativeExpectation) ToPanic() {
+	defer func() {
+		if err := recover(); err != nil {
+			e.test.Errorf("%+v should not panic", e.value)
+		}
+	}()
+	e.value.(func())()
 }
 
 // Expect returns a new Expectation,

@@ -29,4 +29,6 @@ func TestNew(t *testing.T) {
 	e.Expect(1).Not().toBeLessThan(0)
 	e.Expect(2).ToBeGreaterThan(1)
 	e.Expect(1).Not().ToBeGreaterThan(2)
+	e.Expect(func() { panic("This is a panic") }).ToPanic()
+	e.Expect(func() {}).Not().ToPanic()
 }
