@@ -44,6 +44,7 @@ func (e *Expectation) ToEqual(val interface{}) {
 	}
 }
 
+// ToPanic expects a function to panic when executed
 func (e *Expectation) ToPanic() {
 	defer func() {
 		if err := recover(); err == nil {
@@ -169,6 +170,7 @@ func (e *NegativeExpectation) ToBeGreaterThan(number interface{}) {
 	}
 }
 
+// ToPanic expects a function not to panic when executed
 func (e *NegativeExpectation) ToPanic() {
 	defer func() {
 		if err := recover(); err != nil {
