@@ -48,7 +48,7 @@ func (e *Expectation) ToEqual(val interface{}) {
 func (e *Expectation) ToPanic() {
 	defer func() {
 		if err := recover(); err == nil {
-			e.test.Errorf("%v should not panic", e.value)
+			e.test.Errorf("%v should panic", e.value)
 		}
 	}()
 	e.value.(func())()
