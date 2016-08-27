@@ -5,7 +5,10 @@
 package expect
 
 import (
+	"fmt"
+	"path/filepath"
 	"regexp"
+	"runtime"
 	"strings"
 	"testing"
 )
